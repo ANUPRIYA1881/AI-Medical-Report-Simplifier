@@ -58,7 +58,9 @@ function App() {
     try {
       console.log("Uploading file:", file.name);
 
-      const response = await fetch("http://127.0.0.1:8000/api/analyze", {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      const response = await fetch(`${API_URL}/analyze`, {
         method: "POST",
         body: formData,
       });
@@ -99,18 +101,21 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/ask", {
-        method: "POST",
+      const response = await fetch(
+        "https://ai-medical-report-backend-pcyt.onrender.com/api/ask",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            question: question,
+            report_context: result.extracted_text,
+          }),
         },
-
-        body: JSON.stringify({
-          question: question,
-          report_context: result.extracted_text,
-        }),
-      });
+      );
 
       const data = await response.json();
 
