@@ -5,9 +5,13 @@ from PIL import Image
 from io import BytesIO
 
 # Tesseract OCR executable
-pytesseract.pytesseract.tesseract_cmd = (
-    r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-)
+import pytesseract
+import os
+
+if os.name == "nt":
+    pytesseract.pytesseract.tesseract_cmd = (
+        r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+    )
 
 def extract_text_from_pdf(file_bytes: bytes) -> str:
     """
