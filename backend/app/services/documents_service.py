@@ -1,3 +1,4 @@
+import os
 import fitz
 import pytesseract
 
@@ -5,8 +6,6 @@ from PIL import Image
 from io import BytesIO
 
 # Tesseract OCR executable
-import pytesseract
-import os
 
 if os.name == "nt":
     pytesseract.pytesseract.tesseract_cmd = (
