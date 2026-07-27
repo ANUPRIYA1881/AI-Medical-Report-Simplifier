@@ -13,6 +13,8 @@ import {
 import "./App.css";
 
 function App() {
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -58,8 +60,6 @@ function App() {
     try {
       console.log("Uploading file:", file.name);
 
-      const API_URL = import.meta.env.VITE_API_URL;
-
       const response = await fetch(`${API_URL}/api/analyze`, {
         method: "POST",
         body: formData,
@@ -101,21 +101,18 @@ function App() {
     setError("");
 
     try {
-      const response = await fetch(
-        "https://ai-medical-report-backend-pcyt.onrender.com/api/ask",
-        {
-          method: "POST",
+      const response = await fetch(`${API_URL}/api/ask`, {
+        method: "POST",
 
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            question: question,
-            report_context: result.extracted_text,
-          }),
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+
+        body: JSON.stringify({
+          question: question,
+          report_context: result.extracted_text,
+        }),
+      });
 
       const data = await response.json();
 
